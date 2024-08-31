@@ -1,0 +1,99 @@
+[
+{
+	"uri": "//localhost:1313/vi/",
+	"title": "Session Management",
+	"tags": [],
+	"description": "",
+	"content": "Hướng Dẫn Triển Khai Trang Web Trên AWS EC2 Bằng Docker và Cấu Hình NGINX Tổng quan Bài hướng dẫn này cung cấp một cái nhìn tổng quan về quá trình triển khai một trang web lên AWS EC2, sử dụng Docker và NGINX. Bạn sẽ học cách tạo một instance EC2, cài đặt Docker, và xây dựng một container để chạy ứng dụng web của mình. Sau đó, chúng ta sẽ cấu hình NGINX để làm reverse proxy, điều phối các yêu cầu HTTP đến container của bạn một cách hiệu quả. Hướng dẫn này không chỉ giúp bạn hiểu rõ từng bước của quy trình triển khai mà còn giúp tối ưu hóa và bảo mật ứng dụng của bạn trên cloud.\nNội dung Giới thiệu Các bước chuẩn bị Tạo kết nối đến máy chủ EC2 Quản lý session logs Port Forwarding Dọn dẹp tài nguyên "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/",
+	"title": "Chuẩn bị VPC và EC2",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, chúng ta sẽ cần tạo một VPC có 2 subnet public / private. Sau đó tạo 1 EC2 Instance Linux nằm trong public subnet, 1 EC2 Instance Windows nằm trong private subnet.\nTổng quan kiến trúc sau khi các bạn hoàn tất bước này sẽ như sau:\nĐể tìm hiểu cách tạo các EC2 instance và VPC với public/private subnet các bạn có thể tham khảo bài lab :\nGiới thiệu về Amazon EC2 Làm việc với Amazon VPC Nội dung Tạo VPC Tạo Public subnet Tạo Private subnet Tạo security group Tạo máy chủ Linux public Tạo máy chủ Windows private "
+},
+{
+	"uri": "//localhost:1313/vi/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "Trong bài hướng dẫn này, chúng ta sẽ cùng tìm hiểu cách triển khai một trang web lên EC2 của AWS, sử dụng Docker để containerize ứng dụng và cấu hình NGINX làm reverse proxy. EC2 là một dịch vụ của Amazon Web Services cho phép chúng ta khởi tạo và quản lý máy chủ ảo trên cloud, cung cấp môi trường mạnh mẽ và linh hoạt để triển khai các ứng dụng. Docker sẽ giúp chúng ta đóng gói ứng dụng trong một container, đảm bảo tính nhất quán và dễ dàng triển khai trên nhiều môi trường. Cuối cùng, chúng ta sẽ sử dụng NGINX để quản lý các yêu cầu HTTP, tối ưu hiệu suất và bảo mật cho ứng dụng.\n"
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.1-createec2-aws/",
+	"title": "Tạo EC2 Ubuntu ",
+	"tags": [],
+	"description": "",
+	"content": "Tạo EC2 Ubuntu Lab VPC Truy cập giao diện quản trị dịch vụ VPC và tìm kiếm EC2. Sau khi truy cập vào EC2 Dashboard Click Launch instance. Click Create VPC. Điền thông tin cho EC2 Instance. Các bạn có thể chọn nhiều hệ điều hành khác nhau ở đây. Ở bước này mình chọn Ubuntu. "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/",
+	"title": "Các bước thực hiện",
+	"tags": [],
+	"description": "",
+	"content": "\rĐể thực hiện được bài lap này, bạn cần chuẩn bị sẵn một file deploy website và thuê một server Ubuntu EC2.\nĐể tìm hiểu cách tạo các EC2 instance các bạn có thể tham khảo bài lab :\nGiới thiệu về Amazon EC2 Nội dung Chuẩn bị Ubuntu EC2 "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.2-createkeypair/",
+	"title": "Tạo key pair",
+	"tags": [],
+	"description": "",
+	"content": "Tạo key pair Tạo Key pair. Trong Amazon EC2 (Elastic Compute Cloud), một key pair là một cặp khóa mật mã được sử dụng để đăng nhập an toàn vào các phiên bản EC2 của bạn. Key pair bao gồm hai phần:\nPublic Key (khóa công khai): Được lưu trữ trên phiên bản EC2 mà bạn tạo ra. Khi bạn tạo một phiên bản mới, bạn có thể chỉ định public key từ một key pair đã tồn tại hoặc tạo một key pair mới.\nPrivate Key (khóa bí mật): Được tải về và lưu trữ cục bộ trên máy tính của bạn khi bạn tạo key pair. Khóa này được sử dụng để đăng nhập vào phiên bản EC2 của bạn thông qua SSH (Secure Shell). Chỉ bạn mới có quyền truy cập vào private key này.\nKhi bạn kết nối đến phiên bản EC2 qua SSH, private key sẽ được sử dụng để xác thực rằng bạn có quyền truy cập vào phiên bản đó. Nếu không có private key tương ứng với public key trên phiên bản, bạn sẽ không thể truy cập được.\nNói cách khác, key pair giúp đảm bảo rằng chỉ những người có private key mới có thể truy cập vào phiên bản EC2, bảo vệ phiên bản khỏi truy cập trái phép.\nBước này sẽ rất quan trọng và sẽ cần có file .ppk để kết nối FileZilla với EC2 Ubuntu\nFileZilla là một phần mềm ứng dụng mã nguồn mở được sử dụng để truyền tải tệp tin giữa máy tính cá nhân của bạn và máy chủ từ xa qua giao thức FTP (File Transfer Protocol) và các giao thức liên quan như SFTP (SSH File Transfer Protocol) và FTPS (FTP Secure).\nClick Create new key pair\nĐiền thông tin tạo mới key pair Bước 1: Điền tên key pair Bước 2: Chọn định dạng file Bước 3: Click Create key pair "
+},
+{
+	"uri": "//localhost:1313/vi/3-cleanup/",
+	"title": "Dọn dẹp tài nguyên  ",
+	"tags": [],
+	"description": "",
+	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nXóa EC2 instance Truy cập giao diện quản trị dịch vụ EC2 Click Instances. Click chọn cả 2 instance Public Linux Instance và Private Windows Instance. Click Instance state. Click Terminate instance, sau đó click Terminate để xác nhận. Truy cập giao diện quản trị dịch vụ IAM Click Roles. Tại ô tìm kiếm , điền SSM. Click chọn SSM-Role. Click Delete, sau đó điền tên role SSM-Role và click Delete để xóa role. Click Users. Click chọn user Portfwd. Click Delete, sau đó điền tên user Portfwd và click Delete để xóa user. Xóa S3 bucket Truy cập giao diện quản trị dịch vụ System Manager - Session Manager. Click tab Preferences. Click Edit. Kéo chuột xuống dưới. Tại mục S3 logging. Bỏ chọn Enable để tắt tính năng logging. Kéo chuột xuống dưới. Click Save. Truy cập giao diện quản trị dịch vụ S3 Click chọn S3 bucket chúng ta đã tạo cho bài thực hành. ( Ví dụ : lab-fcj-bucket-0001 ) Click Empty. Điền permanently delete, sau đó click Empty để tiến hành xóa object trong bucket. Click Exit. Sau khi xóa hết object trong bucket, click Delete Điền tên S3 bucket, sau đó click Delete bucket để tiến hành xóa S3 bucket. Xóa các VPC Endpoint Truy cập vào giao diện quản trị dịch vụ VPC Click Endpoints. Chọn 4 endpoints chúng ta đã tạo cho bài thực hành bao gồm SSM, SSMMESSAGES, EC2MESSAGES, S3GW. Click Actions. Click Delete VPC endpoints. Tại ô confirm , điền delete. Click Delete để tiến hành xóa các endpoints. Click biểu tượng refresh, kiểm tra tất cả các endpoints đã bị xóa trước khi làm bước tiếp theo. Xóa VPC Truy cập vào giao diện quản trị dịch vụ VPC Click Your VPCs. Click chọn Lab VPC. Click Actions. Click Delete VPC. Tại ô confirm, điền delete để xác nhận, click Delete để thực hiện xóa Lab VPC và các tài nguyên liên quan. "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.3-configurestorage/",
+	"title": "Định cấu hình lưu trữ",
+	"tags": [],
+	"description": "",
+	"content": "Định cấu hình lưu trữ Ở bước này các bạn có thể cấu hình lưu trữ EC2. Trong Amazon EC2 (Elastic Compute Cloud), Configure Storage là bước trong quá trình tạo hoặc khởi tạo một phiên bản (instance) EC2, nơi bạn có thể thiết lập và tùy chỉnh dung lượng lưu trữ cho phiên bản đó.\nĐịnh cấu hình lưu trữ là một phần quan trọng trong việc tối ưu hóa hiệu suất và chi phí của hệ thống khi chạy trên AWS, đặc biệt khi bạn cần một hệ thống có khả năng mở rộng và đáp ứng các yêu cầu lưu trữ cụ thể của ứng dụng.\nỞ bước này các bạn có thể tăng giảm trong phạm vi free tier để tối ưu chi phí.\nCuối cùng các bạn Click Launch Instane để tạo EC2. "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.4-connectec2/",
+	"title": "Kết nối EC2 và cài đặt Docker",
+	"tags": [],
+	"description": "",
+	"content": "Kết nối EC2 và cài đặt Docker Sau khi tạo server thành công, các bạn Click Connect to Instance. Hoặc có thể Click Connect ở EC2 Dashboard Instance\nSau khi Click Connect các bạn sẽ được chuyển tiếp đến trang web màn hình Ubuntu. Cài đặt Docker. Lệnh cài đặt Docker trên Ubuntu sudo snap install docker "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.5-connectfztoec2/",
+	"title": "Kết nối FileZilla với EC2",
+	"tags": [],
+	"description": "",
+	"content": "Kết nối FileZilla với EC2 Kết nối FileZilla với EC2 Click Icon đã đánh dấu Click New site Bước 1: Các bạn có thể đổi tên tuỳ thích. Bước 2: Chọn SFTP - SSH File Transfer Protocol. Bước 3: Nhập Public IPv4 DNS. Copy ở EC2 Instance Bước 4: Chọn key file. Bước 5: Nhập tên user:\u0026ldquo;ubuntu\u0026rdquo;.\nBước 6: Chọn đường dẫn file key pair ở bước 2.1.2 đã tạo.\nBước 7: Click Connect.\nTích vào Always trust this host, add this key to the cache\nVà CLick OK\nSau đó bạn kéo file deploy của bạn lên server. "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.6-builddocker/",
+	"title": "Xây dựng Docker",
+	"tags": [],
+	"description": "",
+	"content": "Xây dựng Images và chạy container Docker Xây dựng Images Docker. Chạy Container Docker "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.7.configureport/",
+	"title": "Cấu hình Security Group và Nginx",
+	"tags": [],
+	"description": "",
+	"content": "Cấu hình Security Group và Nginx Cấu hình Security Group. Click Security CLick Security groups Add rule Chọn Custom TCP Bước 2: Nhập port đã chạy ở Container Docker Bước 3: Chọn Anywhere Click Save rule Deploy thành công trang web chạy bằng Docker với port ngoài 3000. Nhưng vấn đề vẫn còn là chưa thể di chuyển giữa các đường dẫn trang web. Chúng ta cần cấu hình Nginx. Cấu hình Nginx. Truy cập vào bash của container docker đang chạy trang web. Chỉnh sửa file nginx.conf: user nginx; worker_processes auto; error_log /var/log/nginx/error.log warn; pid /var/run/nginx.pid; events { worker_connections 1024; } http { include /etc/nginx/mime.types; default_type application/octet-stream; log_format main \u0026#39;$remote_addr - $remote_user [$time_local] \u0026#34;$request\u0026#34; \u0026#39; \u0026#39;$status $body_bytes_sent \u0026#34;$http_referer\u0026#34; \u0026#39; \u0026#39;\u0026#34;$http_user_agent\u0026#34; \u0026#34;$http_x_forwarded_for\u0026#34;\u0026#39;; access_log /var/log/nginx/access.log main; sendfile on; #tcp_nopush on; keepalive_timeout 65; #gzip on; #include /etc/nginx/conf.d/*.conf; server { listen 80; location / { root /usr/share/nginx/html; index index.html index.htm; try_files $uri $uri/ /index.html; } } } Sau khi hoàn thành, khởi động lại container. Thành công truy cập các endpoint trong trang web. "
+},
+{
+	"uri": "//localhost:1313/vi/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "//localhost:1313/vi/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
