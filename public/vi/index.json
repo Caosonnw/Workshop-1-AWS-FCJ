@@ -8,10 +8,10 @@
 },
 {
 	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/",
-	"title": "Chuẩn bị VPC và EC2",
+	"title": "Chuẩn bị EC2",
 	"tags": [],
 	"description": "",
-	"content": "Trong bước này, chúng ta sẽ cần tạo một VPC có 2 subnet public / private. Sau đó tạo 1 EC2 Instance Linux nằm trong public subnet, 1 EC2 Instance Windows nằm trong private subnet.\nTổng quan kiến trúc sau khi các bạn hoàn tất bước này sẽ như sau:\nĐể tìm hiểu cách tạo các EC2 instance và VPC với public/private subnet các bạn có thể tham khảo bài lab :\nGiới thiệu về Amazon EC2 Làm việc với Amazon VPC Nội dung Tạo VPC Tạo Public subnet Tạo Private subnet Tạo security group Tạo máy chủ Linux public Tạo máy chủ Windows private "
+	"content": "Trong bước này, chúng ta sẽ cần tạo một 1 EC2 Instance Ubuntu.\nĐể tìm hiểu cách tạo các EC2 instance các bạn có thể tham khảo bài lab :\nGiới thiệu về Amazon EC2 Nội dung Tạo EC2 Ubuntu Tạo key pair Định cấu hình lưu trữ Kết nối EC2 và cài đặt Docker Kết nối FileZilla với EC2 Xây dựng Images và chạy container Docker Cấu hình Security Group và Nginx "
 },
 {
 	"uri": "//localhost:1313/vi/1-introduce/",
@@ -25,7 +25,7 @@
 	"title": "Tạo EC2 Ubuntu ",
 	"tags": [],
 	"description": "",
-	"content": "Tạo EC2 Ubuntu Lab VPC Truy cập giao diện quản trị dịch vụ VPC và tìm kiếm EC2. Sau khi truy cập vào EC2 Dashboard Click Launch instance. Click Create VPC. Điền thông tin cho EC2 Instance. Các bạn có thể chọn nhiều hệ điều hành khác nhau ở đây. Ở bước này mình chọn Ubuntu. "
+	"content": "Tạo EC2 Ubuntu Truy cập giao diện quản trị dịch vụ VPC và tìm kiếm EC2. Sau khi truy cập vào EC2 Dashboard Click Launch instance. Điền thông tin cho EC2 Instance. Các bạn có thể chọn nhiều hệ điều hành khác nhau ở đây. Ở bước này mình chọn Ubuntu. "
 },
 {
 	"uri": "//localhost:1313/vi/2-prerequiste/",
@@ -46,7 +46,7 @@
 	"title": "Dọn dẹp tài nguyên  ",
 	"tags": [],
 	"description": "",
-	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nXóa EC2 instance Truy cập giao diện quản trị dịch vụ EC2 Click Instances. Click chọn cả 2 instance Public Linux Instance và Private Windows Instance. Click Instance state. Click Terminate instance, sau đó click Terminate để xác nhận. Truy cập giao diện quản trị dịch vụ IAM Click Roles. Tại ô tìm kiếm , điền SSM. Click chọn SSM-Role. Click Delete, sau đó điền tên role SSM-Role và click Delete để xóa role. Click Users. Click chọn user Portfwd. Click Delete, sau đó điền tên user Portfwd và click Delete để xóa user. Xóa S3 bucket Truy cập giao diện quản trị dịch vụ System Manager - Session Manager. Click tab Preferences. Click Edit. Kéo chuột xuống dưới. Tại mục S3 logging. Bỏ chọn Enable để tắt tính năng logging. Kéo chuột xuống dưới. Click Save. Truy cập giao diện quản trị dịch vụ S3 Click chọn S3 bucket chúng ta đã tạo cho bài thực hành. ( Ví dụ : lab-fcj-bucket-0001 ) Click Empty. Điền permanently delete, sau đó click Empty để tiến hành xóa object trong bucket. Click Exit. Sau khi xóa hết object trong bucket, click Delete Điền tên S3 bucket, sau đó click Delete bucket để tiến hành xóa S3 bucket. Xóa các VPC Endpoint Truy cập vào giao diện quản trị dịch vụ VPC Click Endpoints. Chọn 4 endpoints chúng ta đã tạo cho bài thực hành bao gồm SSM, SSMMESSAGES, EC2MESSAGES, S3GW. Click Actions. Click Delete VPC endpoints. Tại ô confirm , điền delete. Click Delete để tiến hành xóa các endpoints. Click biểu tượng refresh, kiểm tra tất cả các endpoints đã bị xóa trước khi làm bước tiếp theo. Xóa VPC Truy cập vào giao diện quản trị dịch vụ VPC Click Your VPCs. Click chọn Lab VPC. Click Actions. Click Delete VPC. Tại ô confirm, điền delete để xác nhận, click Delete để thực hiện xóa Lab VPC và các tài nguyên liên quan. "
+	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nXóa EC2 instance Xoá key pair Truy cập giao diện quản trị dịch vụ EC2 Click Key Pairs. Click chọn key pair ban đầu chúng ta đã tạo. Click Actions và sau đó chọn Delete Gỡ và xoá Security Groups. Click Security Groups Click chọn Security Groups đang được match với EC2 ban đầu. Click Actions Click chọn Delete Security Groups Click Delete Dừng và xoá EC2. Click Instance Click Instance ban đầu đã tạo. Click Instance state Click chọn Terminate (delete) instance Click Terminate (delete) "
 },
 {
 	"uri": "//localhost:1313/vi/2-prerequiste/2.1-createec2/2.1.3-configurestorage/",
