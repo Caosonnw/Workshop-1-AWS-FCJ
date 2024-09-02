@@ -8,11 +8,10 @@ pre: " <b> 2.1.1 </b> "
 
 #### Create EC2 Ubuntu
 
-1. Go to [VPC service administration console](https://console.aws.amazon.com/vpc/home) and search for EC2.
+1. Go to [EC2 service administration console](https://console.aws.amazon.com/vpc/home) and search for EC2.
 
 - After accessing EC2 Dashboard
 - Click **Launch instance**.
-- Click **Create VPC**.
 
 ![VPC](/images/1.png)
 

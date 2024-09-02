@@ -8,7 +8,7 @@ pre: " <b> 2.1.1 </b> "
 
 #### Tạo EC2 Ubuntu
 
-1. Truy cập [giao diện quản trị dịch vụ VPC](https://console.aws.amazon.com/vpc/home) và tìm kiếm EC2.
+1. Truy cập [giao diện quản trị dịch vụ EC2](https://console.aws.amazon.com/vpc/home) và tìm kiếm EC2.
 
 - Sau khi truy cập vào EC2 Dashboard
 - Click **Launch instance**.

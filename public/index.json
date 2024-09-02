@@ -11,7 +11,7 @@
 	"title": "Create EC2 Ubuntu",
 	"tags": [],
 	"description": "",
-	"content": "Create EC2 Ubuntu Go to VPC service administration console and search for EC2. After accessing EC2 Dashboard Click Launch instance. Click Create VPC. Fill in information for EC2 Instance. You can choose many different operating systems here. In this step, I choose Ubuntu. "
+	"content": "Create EC2 Ubuntu Go to VPC service administration console and search for EC2. After accessing EC2 Dashboard Click Launch instance. Fill in information for EC2 Instance. You can choose many different operating systems here. In this step, I choose Ubuntu. "
 },
 {
 	"uri": "//localhost:1313/1-introduce/",
